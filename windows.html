@@ -80,9 +80,9 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 <div id="release-status" class="status ready" role="status" aria-live="polite">Windows installer available · V2.3.4</div>
 </div>
 <div class="cta-panel">
-<a id="installer-download" class="btn" href="https://github.com/flirtyquizcontact-rgb/DirectBeam/releases/download/windows-companion-v2.3.4/DirectBeam_Companion_Setup_x64.exe" rel="noopener noreferrer">Download for Windows (x64)</a>
+<a id="installer-download" class="btn" href="https://github.com/QuizFansStudio/DirectBeam/releases/download/windows-companion-v2.3.4/DirectBeam_Companion_Setup_x64.exe" rel="noopener noreferrer">Download for Windows (x64)</a>
 <div id="installer-details" class="download-meta">V2.3.4 · 49.6 MiB · SHA-256: 55D6D98C1C41ADF5607179CE101D2FBFBC9E0AF66DA3BBC65792D3465F5DD40C</div>
-<a class="btn secondary" href="https://github.com/flirtyquizcontact-rgb/DirectBeam/releases" rel="noopener noreferrer">View official GitHub releases</a>
+<a class="btn secondary" href="https://github.com/QuizFansStudio/DirectBeam/releases" rel="noopener noreferrer">View official GitHub releases</a>
 <p class="small" id="download-note">Installer verified against the public GitHub release. This installer is not Authenticode-signed; Windows SmartScreen may warn. Verify its SHA-256 before running. Do not download from unofficial sources.</p>
 </div>
 </section>
@@ -127,9 +127,9 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
   const summary = document.getElementById("release-summary");
   const button = document.getElementById("installer-download");
   const meta = document.getElementById("installer-details");
-  const api = "https://api.github.com/repos/flirtyquizcontact-rgb/DirectBeam/releases/latest";
+  const api = "https://api.github.com/repos/QuizFansStudio/DirectBeam/releases/latest";
   const officialAssetName = "DirectBeam_Companion_Setup_x64.exe";
-  const downloadPrefix = "https://github.com/flirtyquizcontact-rgb/DirectBeam/releases/download/";
+  const downloadPrefix = "https://github.com/QuizFansStudio/DirectBeam/releases/download/";
   try {
     const response = await fetch(api, {headers:{"Accept":"application/vnd.github+json"}});
     if (response.status === 404) {
