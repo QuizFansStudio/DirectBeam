@@ -1,0 +1,34 @@
+name: Copy verified Windows companion release to Quiz Fans Studio
+on:
+  push:
+    paths:
+      - .github/workflows/qfs-mirror-windows-companion.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Copy and verify official Windows installer
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_REPO: QuizFansStudio/DirectBeam
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG='windows-companion-v2.3.4'
+          ASSET='DirectBeam_Companion_Setup_x64.exe'
+          SHA256='55d6d98c1c41adf5607179ce101d2fbfbc9e0af66da3bbc65792d3465f5dd40c'
+          if gh release view "$TAG" --repo "$TARGET_REPO" >/dev/null 2>&1; then
+            echo 'Target release already exists; refusing to overwrite.'
+            exit 0
+          fi
+          mkdir -p "$RUNNER_TEMP/qfs-windows-release"
+          gh release download "$TAG" --repo flirtyquizcontact-rgb/DirectBeam --pattern "$ASSET" --dir "$RUNNER_TEMP/qfs-windows-release"
+          cd "$RUNNER_TEMP/qfs-windows-release"
+          printf '%s  %s\n' "$SHA256" "$ASSET" | sha256sum --check --status
+          test "$(stat -c%s "$ASSET")" -eq 51961271
+          echo 'PASS: Original SHA-256 and file size verified.'
+          gh release create "$TAG" "$ASSET" --repo "$TARGET_REPO" --target main --title 'DirectBeam Companion 2.3.4 for Windows' --notes "Official Windows installer mirrored unchanged for Quiz Fans Studio. SHA-256: $SHA256"
+          gh release view "$TAG" --repo "$TARGET_REPO" --json tagName,assets --jq '{tag: .tagName, assets: [.assets[] | {name, size}]}'
